@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model List<TodoApp.Models.TodoItem>
 
 @*
     Kiegészítettük a View definicióját, hogy képes 
@@ -16,8 +16,16 @@
 
 
 <ul>
-    @foreach (var elem in Model)
+    @foreach (var todoitem in Model)
     {
-        <li>@elem</li>
+        if (todoitem.Done)
+        {
+            <li><strike>@todoitem.Name</strike></li>
+        }
+        else
+        {
+            <li>@todoitem.Name</li>
+        }
+
     }
 </ul>
