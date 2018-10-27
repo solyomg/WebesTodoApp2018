@@ -35,11 +35,8 @@ namespace TodoApp.Controllers
             lista.Add("Spagetti");
             lista.Add("Marhahús");
             lista.Add("Paradicsom");
-
-            //a ViewBag-be tett adatokat a nézeten ki tudjuk olvasni
-            ViewBag.Lista = lista;
             
-            return View();
+            return View(lista);
         }
 
     }

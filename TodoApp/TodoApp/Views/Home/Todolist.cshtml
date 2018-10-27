@@ -1,4 +1,10 @@
-﻿
+﻿@model List<string>
+
+@*
+    Kiegészítettük a View definicióját, hogy képes 
+    legyen List<string> tipusú adatot fogadni
+*@
+
 @{
     ViewBag.Title = "TodoList";
 }
@@ -10,7 +16,7 @@
 
 
 <ul>
-    @foreach (var elem in ViewBag.Lista)
+    @foreach (var elem in Model)
     {
         <li>@elem</li>
     }
