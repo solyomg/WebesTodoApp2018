@@ -29,3 +29,10 @@
 
     }
 </ul>
+
+@*
+    mindkét megoldás ugyanoda visz, a második a beépített ASP.NET szolgáltatás, 
+    nem kell megadni a Controllert, mert tudja, hogy "hol vagyunk"
+*@
+<a href="/Todo/Create">Új felvitele</a>
+@Html.ActionLink("Új felvitele","Create")

@@ -9,18 +9,30 @@ namespace TodoApp.Controllers
 {
     public class TodoController : Controller
     {
-        // GET: TodoList
-        public ActionResult TodoList()
+        private List<TodoItem> lista= new List<TodoItem>
+            {
+                new TodoItem() { Name = "Só", Done = true },
+                new TodoItem() { Name = "Cukor", Done = true },
+                new TodoItem() { Name = "Spagetti", Done = true },
+                new TodoItem() { Name = "Marhahús", Done = false },
+                new TodoItem() { Name = "Paradicsom", Done = false }
+            };
+    // GET: TodoList
+    public ActionResult Index()
         {
-            var lista = new List<TodoItem>();
+           return View(lista);
+        }
 
-            lista.Add(new TodoItem() { Name = "Só", Done = true });
-            lista.Add(new TodoItem() { Name = "Cukor", Done = true });
-            lista.Add(new TodoItem() { Name = "Spagetti", Done = true });
-            lista.Add(new TodoItem() { Name = "Marhahús", Done = false });
-            lista.Add(new TodoItem() { Name = "Paradicsom", Done = false });
+        public ActionResult Create(string Name)
+        {
+            if (!string.IsNullOrEmpty(Name))
+            {
+                // adatok mentése és vissza az indexre
+                lista.Add(new TodoItem() { Name = Name, Done = true });
+                return RedirectToAction("Index");
+            }
 
-            return View(lista);
+            return View();
         }
     }
 }
