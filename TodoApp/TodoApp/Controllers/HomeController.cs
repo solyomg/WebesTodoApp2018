@@ -27,18 +27,5 @@ namespace TodoApp.Controllers
 
             return View();
         }
-        public ActionResult TodoList()
-        {
-            //bevásárló lista adatai
-            var lista = new List<TodoItem>();
-            lista.Add(new TodoItem() { Name = "Só", Done = true});
-            lista.Add(new TodoItem() { Name = "Cukor", Done = true});
-            lista.Add(new TodoItem() { Name = "Spagetti", Done = true});
-            lista.Add(new TodoItem() { Name = "Marhahús", Done = false});
-            lista.Add(new TodoItem() { Name = "Paradicsom", Done = false});
-        
-            return View(lista);
-        }
-
     }
 }
