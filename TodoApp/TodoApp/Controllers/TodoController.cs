@@ -16,6 +16,13 @@ namespace TodoApp.Controllers
            return View(MyDb.Lista);
         }
 
+        [HttpGet] // csak a GET kérésekre válaszol
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost] // csak a POST kérésekre válaszol
         public ActionResult Create(string Name)
         {
             if (!string.IsNullOrEmpty(Name))
@@ -24,6 +31,7 @@ namespace TodoApp.Controllers
                 MyDb.Lista.Add(new TodoItem() { Name = Name, Done = true });
                 return RedirectToAction("Index");
             }
+            //todo: mivel az adat nem valid, ezért ide hibaüzenet kellene
 
             return View();
         }
