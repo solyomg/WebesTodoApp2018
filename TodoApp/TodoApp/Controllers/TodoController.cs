@@ -23,12 +23,12 @@ namespace TodoApp.Controllers
         }
 
         [HttpPost] // csak a POST kérésekre válaszol
-        public ActionResult Create(string Name)
+        public ActionResult Create(string name, bool isDone )
         {
-            if (!string.IsNullOrEmpty(Name))
+            if (!string.IsNullOrEmpty(name))
             {
                 // adatok mentése és vissza az indexre
-                MyDb.Lista.Add(new TodoItem() { Name = Name, Done = true });
+                MyDb.Lista.Add(new TodoItem() { Name = name, Done = isDone });
                 return RedirectToAction("Index");
             }
             //todo: mivel az adat nem valid, ezért ide hibaüzenet kellene
