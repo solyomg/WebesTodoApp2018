@@ -28,7 +28,8 @@ namespace TodoApp.Controllers
             if (!string.IsNullOrEmpty(name))
             {
                 // adatok mentése és vissza az indexre
-                MyDb.Lista.Add(new TodoItem() { Name = name, Done = isDone });
+                var maxId = MyDb.Lista.Max(x => x.Id);
+                MyDb.Lista.Add(new TodoItem() { Id = maxId + 1, Name = name, Done = isDone });
                 return RedirectToAction("Index");
             }
             //todo: mivel az adat nem valid, ezért ide hibaüzenet kellene
@@ -72,5 +73,20 @@ namespace TodoApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            var item = MyDb.Lista.Single(x => x.Id == id);
+
+            return View(item);
+        }
+
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var item = MyDb.Lista.Single(x => x.Id == id);
+            MyDb.Lista.Remove(item);
+            return RedirectToAction("Index");
+        }
     }
 }
