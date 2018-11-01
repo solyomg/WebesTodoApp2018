@@ -9,11 +9,12 @@ namespace TodoApp.Controllers
 {
     public class TodoController : Controller
     {
-        
-    // GET: TodoList
-    public ActionResult Index()
+        Db db = new Db();
+
+        // GET: TodoList
+        public ActionResult Index()
         {
-           return View(MyDb.Lista);
+           return View(db.TodoItems.ToList());
         }
 
         [HttpGet] // csak a GET kérésekre válaszol
@@ -28,8 +29,9 @@ namespace TodoApp.Controllers
             if (!string.IsNullOrEmpty(name))
             {
                 // adatok mentése és vissza az indexre
-                var maxId = MyDb.Lista.Max(x => x.Id);
-                MyDb.Lista.Add(new TodoItem() { Id = maxId + 1, Name = name, Done = isDone });
+                db.TodoItems.Add(new TodoItem() { Name = name, Done = isDone });
+                //adatbázisba írni
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             //todo: mivel az adat nem valid, ezért ide hibaüzenet kellene
@@ -50,7 +52,7 @@ namespace TodoApp.Controllers
 
             // ha tudom hogy pontosan egy elemet keresek
             //ezt akkor tudom használni, ha garantálni tudom, hogy ez igaz.
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
 
             //ha nem tudom garantálni, akkor
             //ha van ilyen elem, akkor azt adja vissza,
@@ -66,17 +68,19 @@ namespace TodoApp.Controllers
         public ActionResult Edit(int id, string name, bool done)
         {
             //elem kikeresése
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
             // módosítás
             item.Name = name;
             item.Done = done;
+
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
 
             return View(item);
         }
@@ -84,14 +88,15 @@ namespace TodoApp.Controllers
         [HttpPost]
         public ActionResult DeleteConfirmed(int id)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
-            MyDb.Lista.Remove(item);
+            var item = db.TodoItems.Single(x => x.Id == id);
+            db.TodoItems.Remove(item);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         public ActionResult Details(int id)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
             return View(item);
         }
     }
